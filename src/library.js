@@ -29,6 +29,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core', 'sap/ui/core/library'],
                 controls: [
                     "openui5.googlemaps.Map",
                     "openui5.googlemaps.Marker",
+					"openui5.googlemaps.LabeledMarker",
                     "openui5.googlemaps.Polyline",
                     "openui5.googlemaps.Polygon",
                     "openui5.googlemaps.Directions",
