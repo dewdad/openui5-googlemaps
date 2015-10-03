@@ -45,6 +45,13 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 			return new MarkerWithLabel(this.getOptions());
 		};
 
+		Marker.prototype.setLabelText = function(oValue) {
+			this.setProperty('labelText', oValue, true);
+			if (this.marker) {
+				this.marker.setLabelText(this.getLabelText());
+			}
+		};
+
         return Marker;
 
     }, /* bExport= */ true);
