@@ -1,6 +1,10 @@
 sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './Animation'],
     function(jQuery, Control, Gmaps, Animation) {
         "use strict";
+		for (var i = 0; i < Animation.length; i++) {
+			var obj = Animation[i];
+
+		}
 
         var Marker = Control.extend('openui5.googlemaps.Marker', {
             metadata: {

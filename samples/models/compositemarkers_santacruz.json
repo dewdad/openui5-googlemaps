@@ -1,0 +1,48 @@
+{
+  "locations": [
+	{
+	  "name": "Santa Cruz",
+	  "location": [
+		36.957289,
+		-122.017222
+	  ]
+	},
+	{
+	  "name": "Santa Cruz",
+	  "location": [
+		36.958578,
+		-122.017522
+	  ]
+	},
+	{
+	  "name": "Santa Cruz",
+	  "location": [
+		36.962511,
+		-122.02155
+	  ]
+	},
+	{
+	  "name": "Santa Cruz",
+	  "location": [
+		36.962739,
+		-122.023006
+	  ]
+	},
+	{
+	  "name": "Santa Cruz",
+	  "location": [
+		36.964367,
+		-122.004832
+	  ],
+	  "count": 100
+	},
+	{
+	  "name": "Santa Cruz",
+	  "location": [
+		36.964367,
+		-122.004832
+	  ],
+	  "count": 1
+	}
+  ]
+}

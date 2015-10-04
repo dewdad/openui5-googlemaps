@@ -30,6 +30,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './mar
             }
         });
 
+		var isComposite = null;
+
         MarkerCluster.prototype.init = function() {
             this.aListeners = [];
         };
@@ -71,6 +73,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './mar
 
         MarkerCluster.prototype.getOptions = function() {
             var options = {};
+			if(isComposite === null) {
+				try {
+					isComposite = /CompositeMarker$/.test(this.mBindingInfos.markers.template.getMetadata()._sClassName);
+				} catch (e) {
+					isComposite = false
+				}
+			}
+			if(isComposite) options.calculator = compositeSum;
             options.averageCenter = this.getAverageCenter();
             return options;
         };
@@ -81,6 +91,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './mar
             this.addListener('mouseover', jQuery.proxy(this.onClusterMouseover, this));
             this.addListener('mouseout', jQuery.proxy(this.onClusterMouseout, this));
         };
+
+
+
+		// Demostrate calculator usage
+		/*var markerCluster = new MarkerClusterer(map, marker_list, {
+			gridSize:40,
+			minimumClusterSize: 4,
+			calculator: function(markers, numStyles) {
+				if (markers.length &gt;= 50) return {text: markers.length, index: 3}; // red
+				if (markers.length &gt;= 5) return {text: markers.length, index: 2};  // yellow
+				return {text: markers.length, index: 0};    }                      // blue
+		});*/
 
         MarkerCluster.prototype.addListener = function(event, callback, object) {
             this.aListeners.push(Gmaps.event.addListener(this.markerClusterer, event, callback));
@@ -108,6 +130,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './mar
         MarkerCluster.prototype.exit = function() {
             this.reset();
         };
+
+		var compositeSum = function(markers, numStyles){
+			debugger;
+			var index = 0;
+			var title = "";
+			var clusterSize = markers.length;
+			for (var i = 0; i < markers.length; i++) {
+				var marker = markers[i];
+				if(marker.get('count')>1) clusterSize+=marker.get('count')-1;
+			}
+
+			index = Math.min(index, numStyles);
+			return {text: clusterSize, index: index, title: title};
+		}
 
         return MarkerCluster;
 
