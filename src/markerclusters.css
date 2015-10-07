@@ -1,3 +1,19 @@
+.gmaps-cluster-m5 {
+	height: 90px;
+	line-height: 90px;
+	width: 90px;
+	top: -45px;
+	left: -45px;
+	text-align: center;
+	cursor: pointer;
+	color: black;
+	position: absolute;
+	font-size: 11px;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m5.png);
+	background-position: 0px 0px;
+}
 .gmaps-cluster-m4 {
 	height: 78px;
 	line-height: 78px;

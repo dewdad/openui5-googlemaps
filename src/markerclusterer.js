@@ -1193,7 +1193,7 @@ MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
     if (markers.hasOwnProperty(key)) {
       this.pushMarkerTo_(markers[key]);
     }
-  }  
+  }
   if (!opt_nodraw) {
     this.redraw_();
   }
@@ -1433,6 +1433,7 @@ MarkerClusterer.prototype.isMarkerInBounds_ = function (marker, bounds) {
 };
 
 
+// TODO: Make this work with composite markers
 /**
  * Adds a marker to a cluster, or creates a new cluster.
  *

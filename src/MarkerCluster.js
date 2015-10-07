@@ -132,7 +132,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './mar
         };
 
 		var compositeSum = function(markers, numStyles){
-			debugger;
 			var index = 0;
 			var title = "";
 			var clusterSize = markers.length;
@@ -141,7 +140,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'google.maps', './mar
 				if(marker.get('count')>1) clusterSize+=marker.get('count')-1;
 			}
 
-			index = Math.min(index, numStyles);
+			index = Math.min(clusterSize.toString().length, numStyles);
+			console.log({clusterSize: clusterSize, numStyles: numStyles,index: index});
 			return {text: clusterSize, index: index, title: title};
 		}
 

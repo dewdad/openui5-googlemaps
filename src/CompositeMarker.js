@@ -51,14 +51,18 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 				max:Number.POSITIVE_INFINITY,
 				name:'gmaps-cluster-m4'
 			},
+			{
+				max:Number.POSITIVE_INFINITY,
+				name:'gmaps-cluster-m5'
+			},
 		];
 
 		Marker.prototype.createMarker = function(){
 			var oMarker;
 			var count = this.getCount();
 			if(count > 1){
-				var digitsNum = Math.min(count.toString().length, clusterTypes.length);
-				var clusterType = clusterTypes[digitsNum-1].name;
+				var clusterStyle = Math.min(count.toString().length, clusterTypes.length);
+				var clusterType = clusterTypes[clusterStyle-1].name;
 				var $div = $(document.createElement('DIV')).addClass(clusterType).text(count);
 				oMarker = window.cmark = new RichMarker(jQuery.extend(this.getOptions(), {
 					flat: true,
