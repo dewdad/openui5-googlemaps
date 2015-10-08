@@ -28,7 +28,8 @@ var banner = ['/**',
 ].join('\n');
 
 var filePath = {
-    src: './src/*.js',
+    srcjs: './src/*.js',
+	srcres: ['./src/**/*','!**.js'], //.{png,css,svg,jpg,gif}',
     test: './test/*.js',
     dest: './openui5/googlemaps'
 };
@@ -42,9 +43,14 @@ gulp.task('clean', function() {
     }).pipe(clean());
 });
 
+gulp.task('copyres', function(){
+	return gulp.src(filePath.srcres)
+		.pipe(gulp.dest(filePath.dest));
+});
+
 //TODO - all scripts tasks with one stream via lazypipes
-gulp.task('scripts-dbg', ['lint', 'clean'], function() {
-    return gulp.src(filePath.src)
+gulp.task('scripts-dbg', ['lint', 'clean', 'copyres'], function() {
+    return gulp.src(filePath.srcjs)
         .pipe(header(banner, {
             pkg: pkg
         }))
@@ -54,8 +60,8 @@ gulp.task('scripts-dbg', ['lint', 'clean'], function() {
         .pipe(gulp.dest(filePath.dest));
 });
 
-gulp.task('scripts-min', ['lint', 'clean'], function() {
-    return gulp.src(filePath.src)
+gulp.task('scripts-min', ['lint', 'clean', 'copyres'], function() {
+    return gulp.src(filePath.srcjs)
         .pipe(streamify(uglify()))
         .pipe(gulp.dest(filePath.dest))
         .pipe(concat('library-all.js'))
@@ -63,13 +69,13 @@ gulp.task('scripts-min', ['lint', 'clean'], function() {
 });
 
 gulp.task('lint', function() {
-    gulp.src([filePath.src, filePath.test])
+    gulp.src([filePath.srcjs, filePath.test])
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('watch', function() {
-    gulp.watch(filePath.src, ['lint', 'build']);
+    gulp.watch(filePath.srcjs, ['lint', 'build']);
 });
 
 gulp.task('test', ['lint'], function() {
@@ -98,8 +104,8 @@ gulp.task('bump', function() {
 });
 
 gulp.task('ui5preload', function() {
-    return gulp.src(filePath.src)
-        .pipe(streamify(uglify())) 
+    return gulp.src(filePath.srcjs)
+        .pipe(streamify(uglify()))
         .pipe(ui5preload({
             base: 'src',
             namespace: 'openui5.googlemaps',
@@ -130,4 +136,4 @@ gulp.task('release', ['bump', 'build', 'ui5preload'], function() {
 
 gulp.task('default', ['watch', 'build']);
 gulp.task('build', ['scripts-dbg', 'scripts-min']);
-gulp.task('cleanbuild', ['clean']);
+gulp.task('cleanbuild', ['clean', 'build']);

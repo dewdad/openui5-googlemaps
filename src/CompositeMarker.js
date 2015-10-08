@@ -10,7 +10,7 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 		});
 
 		// add style classes for cluster markers
-		$.sap.includeStyleSheet($.sap.getModulePath(libName)+'/markerclusters.css');
+		$.sap.includeStyleSheet($.sap.getModulePath(libName)+'/css/markerclusters.css');
 
 		var Marker = Control.extend('openui5.googlemaps.CompositeMarker', {
 			metadata: {
