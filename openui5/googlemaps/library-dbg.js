@@ -34,6 +34,7 @@
                 controls: [
                     "openui5.googlemaps.Map",
                     "openui5.googlemaps.Marker",
+					"openui5.googlemaps.LabeledMarker",
                     "openui5.googlemaps.Polyline",
                     "openui5.googlemaps.Polygon",
                     "openui5.googlemaps.Directions",
@@ -41,7 +42,7 @@
                     "openui5.googlemaps.MarkerCluster"
                 ],
                 elements: [],
-                version: "0.0.18"
+                version: "0.0.19"
 
             });
         })();
