@@ -1,6 +1,6 @@
 /**
  * openui5-googlemaps - OpenUI5 Google Maps library
- * @version v0.0.18
+ * @version v0.0.19
  * @link http://jasper07.github.io/openui5-googlemaps/
  * @license MIT
  *//**
@@ -1198,7 +1198,7 @@ MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
     if (markers.hasOwnProperty(key)) {
       this.pushMarkerTo_(markers[key]);
     }
-  }  
+  }
   if (!opt_nodraw) {
     this.redraw_();
   }
@@ -1438,6 +1438,7 @@ MarkerClusterer.prototype.isMarkerInBounds_ = function (marker, bounds) {
 };
 
 
+// TODO: Make this work with composite markers
 /**
  * Adds a marker to a cluster, or creates a new cluster.
  *
