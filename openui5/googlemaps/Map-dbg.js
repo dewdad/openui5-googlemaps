@@ -101,6 +101,12 @@
                 oRm.write('>');
                 oRm.renderControl(oControl._html);
                 oRm.write('</div>');
+
+                // empty rendering for render cycle propagation
+                var aChildren = oControl.getMarkers();
+                  for (var i = 0; i < aChildren.length; i++) { // loop over all child Controls, 
+                      oRm.renderControl(aChildren[i]);   
+                  }
             }
         });
 

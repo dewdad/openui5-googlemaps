@@ -43,16 +43,18 @@
                     'animation': {
                         type: 'int',
                         bindable: 'bindable',
-                        defaultValue: Animation.DROP
+                        defaultValue: null//Animation.DROP
                     }
                 },
                 events: {
                     'click': {},
                     'dragEnd': {},
                     'infoWindowClose': {}
-                },
-                renderer: {}
-            }
+                }
+            },
+                renderer: function(oRm, oControl) {
+                     oRm.write('');
+                }
         });
 
         Marker.prototype.init = function() {
@@ -92,7 +94,10 @@
         Marker.prototype.setIcon = function(oValue) {
             this.setProperty('icon', oValue, true);
             if (this.marker) {
-                this.marker.setIcon(this.getIcon());
+                try{this.marker.setIcon(this.getIcon());}
+                catch(e){
+                    console.log({this: [this, this.getMetadata()], arg: arguments, err: e});
+                }
             }
         };
 
@@ -149,8 +154,16 @@
 
         Marker.prototype.onMapRendered = function(map) {
             this.setMap(map);
-            this.setMarker();
+            if(this._waitSetMarker){
+                this.setMarker();
+                this._waitSetMarker = false;       
+            }
         };
+
+        Marker.prototype.onAfterRendering = function(){
+			if(!!this.getMap()) this.setMarker();
+			else this._waitSetMarker = true;
+		};
 
         Marker.prototype.addListener = function(event, callback, object) {
             this.aListeners.push(Gmaps.event.addListener(this.marker, event, callback));

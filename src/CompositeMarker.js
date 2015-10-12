@@ -1,8 +1,8 @@
 sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
-	function(jQuery, Control, Gmaps) {
+	function(jQuery, SuperClass, Gmaps) {
 		"use strict";
 
-		var libName = Control.getMetadata()._sLibraryName;
+		var libName = SuperClass.getMetadata()._sLibraryName;
 
 		sap.ui.getCore().getEventBus().subscribe(Gmaps.notifyEvent, function(){
 			$.sap.require(libName+'.richmarker');
@@ -12,7 +12,7 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 		// add style classes for cluster markers
 		$.sap.includeStyleSheet($.sap.getModulePath(libName)+'/css/markerclusters.css');
 
-		var Marker = Control.extend('openui5.googlemaps.CompositeMarker', {
+		var Marker = SuperClass.extend('openui5.googlemaps.CompositeMarker', {
 			metadata: {
 				properties: {
 					count:{
@@ -20,11 +20,12 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 						defaultValue: 1,
 						bindable: 'bindable'
 					}
-				},
-				events: {
-				},
-				renderer: {}
-			}
+				}
+			},
+			renderer: {}/*,
+			onAfterRendering: function(){
+				debugger;
+			}*/
 		});
 
 		Marker.prototype.setCount = function(oValue) {
@@ -33,6 +34,18 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
                 this.marker.set('count', this.getCount());
             }
         };
+
+		Marker.prototype.setIcon = function(oValue){
+			if(this.getCount()>1) return;
+			/*if(!!this.marker && !this.marker.setIcon){
+				this.marker.setMap(null);
+				this.marker = null;
+				this.rerender();
+				return false;
+			}else{*/
+				SuperClass.prototype.setIcon.apply(this, arguments);
+			/*}*/
+		};
 
 		var clusterTypes = [
 			{
@@ -57,6 +70,15 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 			},
 		];
 
+
+		Marker.prototype.setMarker = function() {
+			if(!!this.marker){
+				this.marker.setMap(null);
+				this.marker = null;
+			}
+			SuperClass.prototype.setMarker.call(this);
+		};
+
 		Marker.prototype.createMarker = function(){
 			var oMarker;
 			var count = this.getCount();
@@ -71,7 +93,8 @@ sap.ui.define(['jquery.sap.global', './Marker' , 'google.maps'],
 				}));
 				oMarker.set('count', this.getCount());
 			}else{
-				oMarker = new Gmaps.Marker(this.getOptions());
+				//oMarker = new Gmaps.Marker(this.getOptions());
+				oMarker = SuperClass.prototype.createMarker.call(this);
 			}
 			return oMarker;
 		};
